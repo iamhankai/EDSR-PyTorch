@@ -55,9 +55,13 @@ class EDSR(nn.Module):
     def forward(self, x):
         x = self.sub_mean(x)
         x = self.head(x)
+        
+        x2 = nn.functional.interpolate(x, scale_factor=2)
 
         res = self.body(x)
         res += x
+        
+        res += x2
 
         x = self.tail(res)
         x = self.add_mean(x)

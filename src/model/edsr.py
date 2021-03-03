@@ -61,7 +61,7 @@ class EDSR(nn.Module):
         res = self.body(x)
         res += x
         
-        res += x2
+        res = self.up(res) + x2
 
         x = self.tail(res)
         x = self.add_mean(x)
